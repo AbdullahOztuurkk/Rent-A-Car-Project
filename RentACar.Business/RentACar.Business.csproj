@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentACar.Core\RentACar.Core.csproj" />
+    <ProjectReference Include="..\RentACar.DataAccess\RentACar.DataAccess.csproj" />
+    <ProjectReference Include="..\RentACar.Entities\RentACar.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
