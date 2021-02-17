@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
-using RentACar.Business.Validation;
-using RentACar.Core.Utilities.FluentValidation;
 using RentACar.Core.Utilities.Result;
 using RentACar.DataAccess.Abstract;
-using RentACar.DataAccess.Concrete.EntityFramework;
 using RentACar.Entities.Concrete;
 
 namespace RentACar.Business.Concrete

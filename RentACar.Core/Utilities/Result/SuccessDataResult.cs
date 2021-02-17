@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RentACar.Core.Utilities.Result
+﻿namespace RentACar.Core.Utilities.Result
 {
     /// <summary>
     /// Success data result response

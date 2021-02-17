@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using RentACar.Business.Abstract;
 using RentACar.Business.Concrete;
 using RentACar.DataAccess.Abstract;
@@ -31,8 +27,6 @@ namespace RentACar.Business
             .AddScoped<ICustomerDal, EfCustomerDal>()
             .AddScoped<IRentalDal, EfRentalDal>();
 
-            services.AddDbContext<RentACarContext>(opt=>
-                opt.UseSqlServer("Data Source = DESKTOP-2QF0S4K; Initial Catalog = RentACarDb; Integrated Security = True;"));
             return services;
         }
     }

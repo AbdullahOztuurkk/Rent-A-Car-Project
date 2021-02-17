@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentValidation;
+﻿using FluentValidation;
 using RentACar.Business.Constants;
 using RentACar.Entities.Concrete;
 
-namespace RentACar.Business.Validation
+namespace RentACar.Business.Validation.FluentValidation
 {
     public class CarValidator:AbstractValidator<Car>
     {

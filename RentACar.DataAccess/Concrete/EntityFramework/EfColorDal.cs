@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using RentACar.Core.DataAccess;
 using RentACar.DataAccess.Abstract;
 using RentACar.Entities.Concrete;

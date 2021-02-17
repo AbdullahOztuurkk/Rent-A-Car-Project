@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using RentACar.Core.Entities;
-
-namespace RentACar.Business.Constants
+﻿namespace RentACar.Business.Constants
 {
     public static class Messages
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using RentACar.Business.Concrete;
 using RentACar.DataAccess.Concrete.EntityFramework;
@@ -22,7 +21,7 @@ namespace RentACar.ConsoleUI
         private static void WriteToCenter(string word, bool isQuestion = false)
         {
             Console.WriteLine();
-            if (isQuestion) Console.ForegroundColor = ConsoleColor.DarkGray;
+            if (isQuestion) Console.ForegroundColor = ConsoleColor.Red;
             else Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition((Console.WindowWidth - word.Length) / 2, Console.CursorTop);
             Console.Write(word);
@@ -35,10 +34,7 @@ namespace RentACar.ConsoleUI
         private static string FormatWord(string word)
         {
             if (word.Length > 12)
-            {
                 word = word.Substring(0, 12) + ".";
-            }
-
             return word;
         }
         /// <summary>
@@ -46,7 +42,7 @@ namespace RentACar.ConsoleUI
         /// </summary>
         private static void PrintCars()
         {
-            WriteToCenter(new string('_', 10) + " Car List " + new string('_', 10),true);
+            WriteToCenter(new string('_', 10) + " Car List " + new string('_', 10), true);
             Console.Write("\n");
             var processResult = carManager.GetAll();
             if (processResult.IsSuccess)
@@ -61,35 +57,28 @@ namespace RentACar.ConsoleUI
         /// <summary>
         /// Add car with CarManager 
         /// </summary>
-        private static void AddCars()
+        private static void AddCar()
         {
-            WriteToCenter("How Much will you insert car?");
-            List<Car> cars = new List<Car>();
-            int counter = Convert.ToInt32(Console.ReadLine());
-            for (int i = 0; i < counter; i++)
+            WriteToCenter("Car Name : ");
+            string carName = Console.ReadLine();
+            WriteToCenter("Model Year : ");
+            int ModelYear = Convert.ToInt32(Console.ReadLine());
+            WriteToCenter("Daily Price : ");
+            int dailyPrice = Convert.ToInt32(Console.ReadLine());
+            WriteToCenter("Brand Id: ");
+            int brandId = Convert.ToInt32(Console.ReadLine());
+            WriteToCenter("Color Id : ");
+            int colorId = Convert.ToInt32(Console.ReadLine());
+            var result = carManager.Add(new Car
             {
-                WriteToCenter("Car Name : ");
-                string carName = Console.ReadLine();
-                WriteToCenter("Model Year : ");
-                int ModelYear = Convert.ToInt32(Console.ReadLine());
-                WriteToCenter("Daily Price : ");
-                int dailyPrice = Convert.ToInt32(Console.ReadLine());
-                WriteToCenter("Brand Id: ");
-                int brandId = Convert.ToInt32(Console.ReadLine());
-                WriteToCenter("Color Id : ");
-                int colorId = Convert.ToInt32(Console.ReadLine());
-                cars.Add(new Car
-                {
-                    Description = carName,
-                    DailyPrice = dailyPrice,
-                    ModelYear = ModelYear,
-                    BrandId = brandId,
-                    ColorId = colorId,
-                });
-            }
-            var result =carManager.AddRange(cars);
-            if(result.IsSuccess)
-                    WriteToCenter(result.Message);
+                Description = carName,
+                DailyPrice = dailyPrice,
+                ModelYear = ModelYear,
+                BrandId = brandId,
+                ColorId = colorId,
+            });
+            if (result.IsSuccess)
+                WriteToCenter(result.Message);
         }
         /// <summary>
         /// Update car with CarManager
@@ -109,33 +98,26 @@ namespace RentACar.ConsoleUI
             int brandId = Convert.ToInt32(Console.ReadLine());
             WriteToCenter("Color Id : ");
             int colorId = Convert.ToInt32(Console.ReadLine());
-            var result =carManager.Update(new Car
+            var result = carManager.Update(new Car
             {
-                Id=updatedIndex,
+                Id = updatedIndex,
                 Description = carName,
                 DailyPrice = dailyPrice,
                 ModelYear = ModelYear,
                 BrandId = brandId,
                 ColorId = colorId,
             });
-            if(result.IsSuccess)
+            if (result.IsSuccess)
                 WriteToCenter(result.Message);
         }
         /// <summary>
         /// Add brand with brandManager
         /// </summary>
-        private static void AddBrands()
+        private static void AddBrand()
         {
-            List<Brand> brands = new List<Brand>();
-            WriteToCenter("How much will you insert brand?");
-            int counter = Convert.ToInt32(Console.ReadLine());
-            for (int i = 0; i < counter; i++)
-            {
-                WriteToCenter("Enter the brand to be added : ");
-                brands.Add(new Brand { Name = Console.ReadLine() });
-            }
-            var result = brandManager.AddRange(brands);
-            if(result.IsSuccess)
+            WriteToCenter("Enter the brand to be added : ");
+            var result = brandManager.Add(new Brand { Name = Console.ReadLine() });
+            if (result.IsSuccess)
                 WriteToCenter(result.Message);
         }
         /// <summary>
@@ -174,17 +156,10 @@ namespace RentACar.ConsoleUI
         /// <summary>
         /// Add Color with ColorManager
         /// </summary>
-        private static void AddColors()
+        private static void AddColor()
         {
-            List<Color> colors = new List<Color>();
-            WriteToCenter("How much will you insert color?");
-            int counter = Convert.ToInt32(Console.ReadLine());
-            for (int i = 0; i < counter; i++)
-            {
-                WriteToCenter("Enter the color to be added : ");
-                colors.Add(new Color { Name = Console.ReadLine() });
-            }
-            var result = colorManager.AddRange(colors);
+            WriteToCenter("Enter the color to be added : ");
+            var result = colorManager.Add(new Color { Name = Console.ReadLine() });
             if (result.IsSuccess)
                 WriteToCenter(result.Message);
         }
@@ -221,23 +196,23 @@ namespace RentACar.ConsoleUI
             if (result.IsSuccess)
                 WriteToCenter(result.Message);
         }
-       
+
         /* There are many main functions at above*/
 
         static void Main(string[] args)
         {
-            WriteToCenter("-----------------------------------------------");
-            WriteToCenter("-                                             -");
-            WriteToCenter("-        Software Development Camp            -");
-            WriteToCenter("-                                             -");
-            WriteToCenter("-            Rent A Car System                -");
-            WriteToCenter("-                                             -");
-            WriteToCenter("-----------------------------------------------");
+            WriteToCenter("'''''''''''''''''''''''''''''''''''''''''''''''");
+            WriteToCenter("'                                             '");
+            WriteToCenter("'        Software Development Camp            '");
+            WriteToCenter("'                                             '");
+            WriteToCenter("'            Rent A Car System                '");
+            WriteToCenter("'                                             '");
+            WriteToCenter("'''''''''''''''''''''''''''''''''''''''''''''''");
             WriteToCenter("Welcome to Rent A Car system.");
-            WriteToCenter("1) Car Menu     2)Brand Menu     3) Color Menu"); 
+            WriteToCenter("1) Car Menu     2)Brand Menu     3) Color Menu");
             WriteToCenter("Which one do you choose :", true);      /* FIRST MENU */
             string menuId = Console.ReadLine();
-            switch (menuId)         
+            switch (menuId)
             {
                 case "1":
                     WriteToCenter("Service Types");
@@ -256,7 +231,7 @@ namespace RentACar.ConsoleUI
                             {
                                 case "1":
                                     #region Add Car
-                                    AddCars();
+                                    AddCar();
                                     #endregion
                                     break;
                                 case "2":
@@ -283,7 +258,7 @@ namespace RentACar.ConsoleUI
                                     break;
                             }
                             break;
-                        case "2": 
+                        case "2":
                             carManager = new CarManager(new EfCarDal());  //Chosen External Car Manager
                             WriteToCenter("Process Types");
                             WriteToCenter("1) Add     2) Delete     3) Update     4) List");
@@ -293,7 +268,7 @@ namespace RentACar.ConsoleUI
                             {
                                 case "1":
                                     #region Add Data
-                                    AddCars();
+                                    AddCar();
                                     #endregion
                                     break;
                                 case "2":
@@ -333,7 +308,7 @@ namespace RentACar.ConsoleUI
                     switch (managerId2)
                     {
                         case "1":
-                            brandManager=new BrandManager(new InMemoryBrandDal()); // Chosen Internal Brand Manager
+                            brandManager = new BrandManager(new InMemoryBrandDal()); // Chosen Internal Brand Manager
                             WriteToCenter("Process Types");
                             WriteToCenter("1) Add     2) Delete     3) Update     4) List");
                             WriteToCenter("Which one do you choose :", true);    /*THIRD MENU*/
@@ -342,7 +317,7 @@ namespace RentACar.ConsoleUI
                             {
                                 case "1":
                                     #region Add brand
-                                    AddBrands();
+                                    AddBrand();
                                     #endregion
                                     break;
                                 case "2":
@@ -367,7 +342,7 @@ namespace RentACar.ConsoleUI
                             }
                             break;
                         case "2":
-                            brandManager=new BrandManager(new EfBrandDal()); // Chosen External Brand Manager
+                            brandManager = new BrandManager(new EfBrandDal()); // Chosen External Brand Manager
                             WriteToCenter("Process Types");
                             WriteToCenter("1) Add     2) Delete     3) Update     4) List");
                             WriteToCenter("Which one do you choose :", true);    /*THIRD MENU*/
@@ -376,7 +351,7 @@ namespace RentACar.ConsoleUI
                             {
                                 case "1":
                                     #region Add brand
-                                    AddBrands();
+                                    AddBrand();
                                     #endregion
                                     break;
                                 case "2":
@@ -410,7 +385,7 @@ namespace RentACar.ConsoleUI
                     switch (managerId3)
                     {
                         case "1":
-                            colorManager = new ColorManager(new InMemoryColorDal()) ; // Chosen Internal Color Manager
+                            colorManager = new ColorManager(new InMemoryColorDal()); // Chosen Internal Color Manager
                             WriteToCenter("Process Types");
                             WriteToCenter("1) Add     2) Delete     3) Update     4) List");
                             WriteToCenter("Which one do you choose :", true);    /*THIRD MENU*/
@@ -419,7 +394,7 @@ namespace RentACar.ConsoleUI
                             {
                                 case "1":
                                     #region Add Color
-                                    AddColors();
+                                    AddColor();
                                     #endregion
                                     break;
                                 case "2":
@@ -453,7 +428,7 @@ namespace RentACar.ConsoleUI
                             {
                                 case "1":
                                     #region Add Color
-                                    AddColors();
+                                    AddColor();
                                     #endregion
                                     break;
                                 case "2":

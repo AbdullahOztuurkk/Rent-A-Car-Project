@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using RentACar.Core.Entities;
+﻿using RentACar.Core.Entities;
 
 namespace RentACar.Entities.Concrete
 {

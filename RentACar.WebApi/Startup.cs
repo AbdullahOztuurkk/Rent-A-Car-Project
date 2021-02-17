@@ -1,19 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using RentACar.Business;
-using RentACar.Business.Abstract;
-using RentACar.Business.Concrete;
-using RentACar.DataAccess.Abstract;
+using Microsoft.EntityFrameworkCore;
 using RentACar.DataAccess.Concrete.EntityFramework;
 
 namespace RentACar.WebApi
@@ -31,8 +21,12 @@ namespace RentACar.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //Get Services from Business Layer
-            services.AddServicesDependencies();
+            services.AddDbContext<RentACarContext>(opt =>
+                opt.UseSqlServer("Data Source = DESKTOP-2QF0S4K; Initial Catalog = RentACarDb; Integrated Security = True;"));
+            /*
+             * You can 
+             */
+            //services.AddServicesDependencies();
 
         }
 

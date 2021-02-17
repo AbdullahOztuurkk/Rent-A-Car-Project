@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using RentACar.Core.DataAccess;
 using RentACar.DataAccess.Abstract;
 using RentACar.Entities.Concrete;
