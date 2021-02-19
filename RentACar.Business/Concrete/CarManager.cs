@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Business.Validation.FluentValidation;
+using RentACar.Core.Aspects.Autofac;
+using RentACar.Core.Utilities.FluentValidation;
 using RentACar.Core.Utilities.Result;
 using RentACar.DataAccess.Abstract;
 using RentACar.Entities.Concrete;
@@ -18,8 +21,10 @@ namespace RentACar.Business.Concrete
             this.cardal = cardal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
+            //CheckValidator.Validate(new CarValidator(), car);
             cardal.Add(car);
             return new SuccessResult(Messages.Add_Message(typeof(Car).Name));
         }

@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using ConsoleTableExt;
 using RentACar.Business.Concrete;
+using RentACar.Core.Entities;
 using RentACar.DataAccess.Concrete.EntityFramework;
 using RentACar.DataAccess.Concrete.InMemory;
 using RentACar.Entities.Concrete;
@@ -13,6 +17,7 @@ namespace RentACar.ConsoleUI
         private static CarManager carManager;
         private static BrandManager brandManager;
         private static ColorManager colorManager;
+        private static ConsoleTableBuilder builder;
         /// <summary>
         /// Center alignment for console.write
         /// </summary>
@@ -25,34 +30,6 @@ namespace RentACar.ConsoleUI
             else Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition((Console.WindowWidth - word.Length) / 2, Console.CursorTop);
             Console.Write(word);
-        }
-        /// <summary>
-        /// Edit word if word's length greater than 12
-        /// </summary>
-        /// <param name="word">Any string</param>
-        /// <returns></returns>
-        private static string FormatWord(string word)
-        {
-            if (word.Length > 12)
-                word = word.Substring(0, 12) + ".";
-            return word;
-        }
-        /// <summary>
-        /// Print cars with CarManager 
-        /// </summary>
-        private static void PrintCars()
-        {
-            WriteToCenter(new string('_', 10) + " Car List " + new string('_', 10), true);
-            Console.Write("\n");
-            var processResult = carManager.GetAll();
-            if (processResult.IsSuccess)
-            {
-                foreach (var car in processResult.Data)
-                {
-                    string result = new StringBuilder().AppendFormat("\t\tId : {0}  \t|   Name : {1}  \t|   DailyPrice : {2}  \t|  Model Year : {3}  ", car.Id, FormatWord(car.Description), car.DailyPrice, car.ModelYear).ToString();
-                    Console.WriteLine(result);
-                }
-            }
         }
         /// <summary>
         /// Add car with CarManager 
@@ -85,7 +62,7 @@ namespace RentACar.ConsoleUI
         /// </summary>
         private static void UpdateCar()
         {
-            PrintCars();
+            PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
             WriteToCenter("Enter the id to be updated :");
             int updatedIndex = Convert.ToInt32(Console.ReadLine());
             WriteToCenter("Car Name : ");
@@ -121,27 +98,31 @@ namespace RentACar.ConsoleUI
                 WriteToCenter(result.Message);
         }
         /// <summary>
-        /// Print Brand with BrandManager 
+        /// Print any list to table with column names
         /// </summary>
-        private static void PrintBrands()
+        /// <typeparam name="T">Any database entity</typeparam>
+        /// <param name="data">List of database entities</param>
+        private static void PrintListToTable<T>(List<T> data) where T : class, IEntity, new()
         {
-            WriteToCenter(new string('_', 10) + " Brand List " + new string('_', 10), true);
-            Console.Write("\n");
-            var processResult = brandManager.GetAll();
-            if (processResult.IsSuccess)
-            {
-                foreach (var brand in processResult.Data)
+            ConsoleTableBuilder.From(data)
+                .WithTitle($@"{typeof(T).Name} List", ConsoleColor.White, ConsoleColor.Black)
+                .WithFormat(ConsoleTableBuilderFormat.Alternative)
+                .WithPaddingLeft(string.Empty)
+                .WithTextAlignment(new Dictionary<int, TextAligntment>
                 {
-                    WriteToCenter("Id : " + brand.Id + "     Name : " + brand.Name);
-                }
-            }
+                    {1,TextAligntment.Right},
+                    {2,TextAligntment.Left}
+                })
+                .WithColumn(typeof(T).GetProperties().Select(predicate => predicate.Name).ToList())
+                .ExportAndWriteLine(TableAligntment.Center);
         }
+
         /// <summary>
         /// Update Brand with BrandManager 
         /// </summary>
         private static void UpdateBrand()
         {
-            PrintBrands();
+            PrintListToTable(new BrandManager(new EfBrandDal()).GetAll().Data);
             WriteToCenter("Enter the id to be updated :");
             int updatedIndex = Convert.ToInt32(Console.ReadLine());
             WriteToCenter("New Name : ");
@@ -164,27 +145,10 @@ namespace RentACar.ConsoleUI
                 WriteToCenter(result.Message);
         }
         /// <summary>
-        /// Print Color with ColorManager 
-        /// </summary>
-        private static void PrintColors()
-        {
-            WriteToCenter(new string('_', 10) + " Brand List " + new string('_', 10), true);
-            Console.Write("\n");
-            var processResult = colorManager.GetAll();
-            if (processResult.IsSuccess)
-            {
-                foreach (var color in processResult.Data)
-                {
-                    WriteToCenter("Id : " + color.Id + "     Name : " + color.Name);
-                }
-            }
-        }
-        /// <summary>
         /// Update Color with ColorManager 
         /// </summary>
         private static void UpdateColor()
         {
-            PrintColors();
             WriteToCenter("Enter the id to be updated :");
             int updatedIndex = Convert.ToInt32(Console.ReadLine());
             WriteToCenter("New Name : ");
@@ -210,90 +174,41 @@ namespace RentACar.ConsoleUI
             WriteToCenter("'''''''''''''''''''''''''''''''''''''''''''''''");
             WriteToCenter("Welcome to Rent A Car system.");
             WriteToCenter("1) Car Menu     2)Brand Menu     3) Color Menu");
-            WriteToCenter("Which one do you choose :", true);      /* FIRST MENU */
+            WriteToCenter("Which one do you choose :", true);      /* Entities Menu */
             string menuId = Console.ReadLine();
             switch (menuId)
             {
                 case "1":
-                    WriteToCenter("Service Types");
-                    WriteToCenter("1) Internal     2) External");
-                    WriteToCenter("Which one do you choose :", true);            /*SECOND MENU*/
-                    string managerId = Console.ReadLine();
-                    switch (managerId)
+                    carManager = new CarManager(new EfCarDal());  //Chosen Database Car Manager
+                    WriteToCenter("Process Types");
+                    WriteToCenter("1) Add     2) Delete     3) Update     4) List");
+                    WriteToCenter("Which one do you choose :", true);   /*Process Types Menu*/
+                    string processId_1 = Console.ReadLine(); 
+                    switch (processId_1)
                     {
                         case "1":
-                            carManager = new CarManager(new InMemoryCarDal()); // Chosen Internal Car Manager
-                            WriteToCenter("Process Types");
-                            WriteToCenter("1) Add     2) Delete     3) Update     4) List");
-                            WriteToCenter("Which one do you choose :", true);    /*THIRD MENU*/
-                            string processId = Console.ReadLine();
-                            switch (processId)
-                            {
-                                case "1":
-                                    #region Add Car
-                                    AddCar();
-                                    #endregion
-                                    break;
-                                case "2":
-                                    #region Delete the Car
-                                    PrintCars();
-                                    WriteToCenter("Enter the Id to be deleted :");
-                                    int deletedIndex = Convert.ToInt32(Console.ReadLine());
-                                    var process = carManager.Delete(deletedIndex);
-                                    WriteToCenter(process.IsSuccess is true ? process.Message : "");
-                                    #endregion
-                                    break;
-                                case "3":
-                                    #region Update the Car
-                                    UpdateCar();
-                                    #endregion
-                                    break;
-                                case "4":
-                                    #region Get Cars
-                                    PrintCars();
-                                    #endregion
-                                    break;
-                                default:
-                                    WriteToCenter("Options not found !", true);
-                                    break;
-                            }
+                            #region Add Data
+                            AddCar();
+                            #endregion
                             break;
                         case "2":
-                            carManager = new CarManager(new EfCarDal());  //Chosen External Car Manager
-                            WriteToCenter("Process Types");
-                            WriteToCenter("1) Add     2) Delete     3) Update     4) List");
-                            WriteToCenter("Which one do you choose :", true);
-                            string processId2 = Console.ReadLine();
-                            switch (processId2)
-                            {
-                                case "1":
-                                    #region Add Data
-                                    AddCar();
-                                    #endregion
-                                    break;
-                                case "2":
-                                    #region Delete the Car
-                                    PrintCars();
-                                    WriteToCenter("Enter the Id to be deleted :");
-                                    int deletedIndex = Convert.ToInt32(Console.ReadLine());
-                                    var process = carManager.Delete(deletedIndex);
-                                    WriteToCenter(process.IsSuccess is true ? process.Message : "");
-                                    #endregion
-                                    break;
-                                case "3":
-                                    #region Update the Car
-                                    UpdateCar();
-                                    #endregion
-                                    break;
-                                case "4":
-                                    #region Get Cars
-                                    PrintCars();
-                                    #endregion
-                                    break;
-                                default:
-                                    WriteToCenter("Options not found !", true);
-                                    break;
-                            }
+                            #region Delete the Car
+                            PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
+                            WriteToCenter("Enter the Id to be deleted :");
+                            int deletedIndex = Convert.ToInt32(Console.ReadLine());
+                            var process = carManager.Delete(deletedIndex);
+                            WriteToCenter(process.IsSuccess is true ? process.Message : "");
+                            #endregion
+                            break;
+                        case "3":
+                            #region Update the Car
+                            UpdateCar();
+                            #endregion
+                            break;
+                        case "4":
+                            #region Get Cars
+                            PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
+                            #endregion
                             break;
                         default:
                             WriteToCenter("Options not found !", true);
@@ -301,156 +216,70 @@ namespace RentACar.ConsoleUI
                     }
                     break;
                 case "2":
-                    WriteToCenter("Service Types");
-                    WriteToCenter("1) Internal     2) External");
-                    WriteToCenter("Which one do you choose :", true);            /*SECOND MENU*/
-                    string managerId2 = Console.ReadLine();
-                    switch (managerId2)
+                    brandManager = new BrandManager(new EfBrandDal()); // Chosen Database Brand Manager
+                    WriteToCenter("Process Types");
+                    WriteToCenter("1) Add     2) Delete     3) Update     4) List");
+                    WriteToCenter("Which one do you choose :", true);    /*Process Types Menu*/
+                    string processId_2 = Console.ReadLine();
+                    switch (processId_2)
                     {
                         case "1":
-                            brandManager = new BrandManager(new InMemoryBrandDal()); // Chosen Internal Brand Manager
-                            WriteToCenter("Process Types");
-                            WriteToCenter("1) Add     2) Delete     3) Update     4) List");
-                            WriteToCenter("Which one do you choose :", true);    /*THIRD MENU*/
-                            string processId2 = Console.ReadLine();
-                            switch (processId2)
-                            {
-                                case "1":
-                                    #region Add brand
-                                    AddBrand();
-                                    #endregion
-                                    break;
-                                case "2":
-                                    #region Delete Brand
-                                    PrintBrands();
-                                    WriteToCenter("Enter the Id to be deleted :");
-                                    int deletedIndex = Convert.ToInt32(Console.ReadLine());
-                                    var process = brandManager.Delete(deletedIndex);
-                                    WriteToCenter(process.IsSuccess is true ? process.Message : "");
-                                    #endregion
-                                    break;
-                                case "3":
-                                    #region Update brand
-                                    UpdateBrand();
-                                    #endregion
-                                    break;
-                                case "4":
-                                    #region Get brands
-                                    PrintBrands();
-                                    #endregion
-                                    break;
-                            }
+                            #region Add brand
+                            AddBrand();
+                            #endregion
                             break;
                         case "2":
-                            brandManager = new BrandManager(new EfBrandDal()); // Chosen External Brand Manager
-                            WriteToCenter("Process Types");
-                            WriteToCenter("1) Add     2) Delete     3) Update     4) List");
-                            WriteToCenter("Which one do you choose :", true);    /*THIRD MENU*/
-                            string processId3 = Console.ReadLine();
-                            switch (processId3)
-                            {
-                                case "1":
-                                    #region Add brand
-                                    AddBrand();
-                                    #endregion
-                                    break;
-                                case "2":
-                                    #region Delete Brand
-                                    PrintBrands();
-                                    WriteToCenter("Enter the Id to be deleted :");
-                                    int deletedIndex = Convert.ToInt32(Console.ReadLine());
-                                    var process = brandManager.Delete(deletedIndex);
-                                    WriteToCenter(process.IsSuccess is true ? process.Message : "");
-                                    #endregion
-                                    break;
-                                case "3":
-                                    #region Update brand
-                                    UpdateBrand();
-                                    #endregion
-                                    break;
-                                case "4":
-                                    #region Get brands
-                                    PrintBrands();
-                                    #endregion
-                                    break;
-                            }
+                            #region Delete Brand
+                            PrintListToTable(new BrandManager(new EfBrandDal()).GetAll().Data);
+                            WriteToCenter("Enter the Id to be deleted :");
+                            int deletedIndex = Convert.ToInt32(Console.ReadLine());
+                            var process = brandManager.Delete(deletedIndex);
+                            WriteToCenter(process.IsSuccess is true ? process.Message : "");
+                            #endregion
+                            break;
+                        case "3":
+                            #region Update brand
+                            UpdateBrand();
+                            #endregion
+                            break;
+                        case "4":
+                            #region Get brands
+                            PrintListToTable(new BrandManager(new EfBrandDal()).GetAll().Data);
+                            #endregion
                             break;
                     }
                     break;
                 case "3":
-                    WriteToCenter("Service Types");
-                    WriteToCenter("1) Internal     2) External");
-                    WriteToCenter("Which one do you choose :", true);            /*SECOND MENU*/
-                    string managerId3 = Console.ReadLine();
-                    switch (managerId3)
+                    colorManager = new ColorManager(new EfColorDal()); // Chosen Database Color Manager
+                    WriteToCenter("Process Types");
+                    WriteToCenter("1) Add     2) Delete     3) Update     4) List");
+                    WriteToCenter("Which one do you choose :", true);    /*Process Types Menu*/
+                    string processId_3 = Console.ReadLine();
+                    switch (processId_3)
                     {
                         case "1":
-                            colorManager = new ColorManager(new InMemoryColorDal()); // Chosen Internal Color Manager
-                            WriteToCenter("Process Types");
-                            WriteToCenter("1) Add     2) Delete     3) Update     4) List");
-                            WriteToCenter("Which one do you choose :", true);    /*THIRD MENU*/
-                            string processId2 = Console.ReadLine();
-                            switch (processId2)
-                            {
-                                case "1":
-                                    #region Add Color
-                                    AddColor();
-                                    #endregion
-                                    break;
-                                case "2":
-                                    #region Delete Color
-                                    PrintColors();
-                                    WriteToCenter("Enter the Id to be deleted :");
-                                    int deletedIndex = Convert.ToInt32(Console.ReadLine());
-                                    var process = colorManager.Delete(deletedIndex);
-                                    WriteToCenter(process.IsSuccess is true ? process.Message : "");
-                                    #endregion
-                                    break;
-                                case "3":
-                                    #region Update Color
-                                    UpdateColor();
-                                    #endregion
-                                    break;
-                                case "4":
-                                    #region Get Color
-                                    PrintColors();
-                                    #endregion
-                                    break;
-                            }
+                            #region Add Color
+                            AddColor();
+                            #endregion
                             break;
                         case "2":
-                            colorManager = new ColorManager(new EfColorDal()); // Chosen External Color Manager
-                            WriteToCenter("Process Types");
-                            WriteToCenter("1) Add     2) Delete     3) Update     4) List");
-                            WriteToCenter("Which one do you choose :", true);    /*THIRD MENU*/
-                            string processId3 = Console.ReadLine();
-                            switch (processId3)
-                            {
-                                case "1":
-                                    #region Add Color
-                                    AddColor();
-                                    #endregion
-                                    break;
-                                case "2":
-                                    #region Update Color
-                                    UpdateColor();
-                                    #endregion
-                                    break;
-                                case "3":
-                                    #region Delete Color
-                                    PrintColors();
-                                    WriteToCenter("Enter the Id to be deleted :");
-                                    int deletedIndex = Convert.ToInt32(Console.ReadLine());
-                                    var process = colorManager.Delete(deletedIndex);
-                                    WriteToCenter(process.IsSuccess is true ? process.Message : "");
-                                    #endregion
-                                    break;
-                                case "4":
-                                    #region Get Color
-                                    PrintColors();
-                                    #endregion
-                                    break;
-                            }
+                            #region Update Color
+                            UpdateColor();
+                            #endregion
+                            break;
+                        case "3":
+                            #region Delete Color
+                            PrintListToTable(colorManager.GetAll().Data);
+                            WriteToCenter("Enter the Id to be deleted :");
+                            int deletedIndex = Convert.ToInt32(Console.ReadLine());
+                            var process = colorManager.Delete(deletedIndex);
+                            WriteToCenter(process.IsSuccess is true ? process.Message : "");
+                            #endregion
+                            break;
+                        case "4":
+                            #region Get Color
+                            PrintListToTable(colorManager.GetAll().Data);
+                            #endregion
                             break;
                     }
                     break;

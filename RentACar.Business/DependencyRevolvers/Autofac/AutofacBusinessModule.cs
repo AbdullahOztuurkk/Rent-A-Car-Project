@@ -1,12 +1,20 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
+using Autofac.Extras.DynamicProxy;
+using Castle.DynamicProxy;
 using Microsoft.EntityFrameworkCore;
 using RentACar.Business.Abstract;
 using RentACar.Business.Concrete;
+using RentACar.Core.Utilities.Interceptors;
 using RentACar.DataAccess.Abstract;
 using RentACar.DataAccess.Concrete.EntityFramework;
+using Module = Autofac.Module;
 
 namespace RentACar.Business.DependencyRevolvers.Autofac
 {
+    /// <summary>
+    /// Autofac dependency injection Module
+    /// </summary>
     public class AutofacBusinessModule:Module
     {
         protected override void Load(ContainerBuilder builder)
@@ -28,8 +36,13 @@ namespace RentACar.Business.DependencyRevolvers.Autofac
             builder.RegisterType<EfColorDal>().As<IColorDal>();
             builder.RegisterType<EfRentalDal>().As<IRentalDal>();
 
-            //Db injection
-            builder.RegisterType<RentACarContext>().As<DbContext>();
+            //General AOP Configuration
+            var assembly = Assembly.GetExecutingAssembly();
+            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
+                .EnableInterfaceInterceptors(new ProxyGenerationOptions()
+                {
+                    Selector = new AspectInterceptorSelector()
+                }).SingleInstance();
         }
     }
 }
