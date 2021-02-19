@@ -1,4 +1,5 @@
-﻿using RentACar.Core.Entities;
+﻿using RentACar.ConsoleUI.Attributes;
+using RentACar.Core.Entities;
 
 namespace RentACar.Entities.Concrete
 {
@@ -12,7 +13,9 @@ namespace RentACar.Entities.Concrete
         public string Description { get; set; }
 
         //Relations
+        [SkipProperty]
         public Brand  Brand { get; set; }
+        [SkipProperty]
         public Color Color { get; set; }
 
     }

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using ConsoleTableExt;
 using RentACar.Business.Concrete;
+using RentACar.ConsoleUI.Attributes;
 using RentACar.Core.Entities;
 using RentACar.DataAccess.Concrete.EntityFramework;
 using RentACar.DataAccess.Concrete.InMemory;
@@ -104,16 +108,13 @@ namespace RentACar.ConsoleUI
         /// <param name="data">List of database entities</param>
         private static void PrintListToTable<T>(List<T> data) where T : class, IEntity, new()
         {
+            Console.WriteLine(new string('\n',2));
+            var properties = typeof(T).GetProperties();
             ConsoleTableBuilder.From(data)
                 .WithTitle($@"{typeof(T).Name} List", ConsoleColor.White, ConsoleColor.Black)
                 .WithFormat(ConsoleTableBuilderFormat.Alternative)
                 .WithPaddingLeft(string.Empty)
-                .WithTextAlignment(new Dictionary<int, TextAligntment>
-                {
-                    {1,TextAligntment.Right},
-                    {2,TextAligntment.Left}
-                })
-                .WithColumn(typeof(T).GetProperties().Select(predicate => predicate.Name).ToList())
+                .WithColumn(properties.Where(pre=>!Attribute.IsDefined(pre,typeof(SkipPropertyAttribute))).Select(predicate => predicate.Name).ToList())
                 .ExportAndWriteLine(TableAligntment.Center);
         }
 
