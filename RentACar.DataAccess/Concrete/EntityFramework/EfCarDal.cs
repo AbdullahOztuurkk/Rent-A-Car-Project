@@ -46,5 +46,35 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
                 return result.ToList();
             }
         }
+
+        /// <summary>
+        /// Get Car Images with filter
+        /// </summary>
+        /// <param name="filter">Expression For Car Class</param>
+        /// <returns></returns>
+        public List<GetCarImagesDto> GetCarImageDetails(Expression<Func<Car, bool>> filter = null)
+        {
+            using (RentACarContext context = new RentACarContext())
+            {
+                var result = from car in filter is null ? context.Cars : context.Cars.Where(filter)
+                    join brn in context.Brands
+                        on car.BrandId equals brn.Id
+                    join clr in context.Colors
+                        on car.ColorId equals clr.Id
+                    join crm in context.CarImages
+                        on car.Id equals crm.CarId
+                    select new GetCarImagesDto()
+                    {
+                        DailyPrice = car.DailyPrice,
+                        ModelYear = car.ModelYear,
+                        Description = car.Description,
+                        ColorName = clr.Name,
+                        BrandName = brn.Name,
+                        ImagePath = crm.ImagePath,
+                        CreatedDate = crm.CreatedDate,
+                    };
+                return result.ToList();
+            }
+        }
     }
 }

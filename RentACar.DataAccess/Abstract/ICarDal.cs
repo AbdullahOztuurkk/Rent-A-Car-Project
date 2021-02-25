@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using RentACar.Core.DataAccess;
 using RentACar.Entities.Concrete;
+using RentACar.Entities.Dtos;
 
 namespace RentACar.DataAccess.Abstract
 {
@@ -10,5 +13,7 @@ namespace RentACar.DataAccess.Abstract
     public interface ICarDal:IEntityRepository<Car>
     {
         public void AddRange(List<Car> cars);
+        public List<GetCarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null);
+        public List<GetCarImagesDto> GetCarImageDetails(Expression<Func<Car, bool>> filter = null);
     }
 }

@@ -8,6 +8,7 @@ using RentACar.Core.Utilities.FluentValidation;
 using RentACar.Core.Utilities.Result;
 using RentACar.DataAccess.Abstract;
 using RentACar.Entities.Concrete;
+using RentACar.Entities.Dtos;
 
 namespace RentACar.Business.Concrete
 {
@@ -75,7 +76,12 @@ namespace RentACar.Business.Concrete
         {
             var result= cardal.GetAll(car => car.Description.Contains(description));
             return new SuccessDataResult<List<Car>>(result);
+        }
 
+        public IDataResult<List<GetCarImagesDto>> GetAllImagesById(int id)
+        {
+            var result = cardal.GetCarImageDetails(car => car.Id == id);
+            return new SuccessDataResult<List<GetCarImagesDto>>(result);
         }
     }
 }

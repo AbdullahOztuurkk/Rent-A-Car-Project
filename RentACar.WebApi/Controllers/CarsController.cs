@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using RentACar.Business.Abstract;
 using RentACar.Entities.Concrete;
 
@@ -12,10 +15,14 @@ namespace RentACar.WebApi.Controllers
     public class CarsController : ControllerBase
     {
         private ICarService carService;
+        private ICarImageService carImageService;
+        private IFileProcess fileProcess;
 
-        public CarsController(ICarService carService)
+        public CarsController(ICarService carService, ICarImageService carImageService, IFileProcess fileProcess)
         {
             this.carService = carService;
+            this.carImageService = carImageService;
+            this.fileProcess = fileProcess;
         }
 
         [HttpGet]
@@ -40,6 +47,17 @@ namespace RentACar.WebApi.Controllers
                 return Ok(result);
             }
 
+            return BadRequest(result.Message);
+        }
+        [HttpGet]
+        [Route("images/{id}")]
+        public IActionResult GetImages(int id)
+        {
+            var result = carService.GetAllImagesById(id);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
             return BadRequest(result.Message);
         }
         [HttpPost]
@@ -75,5 +93,6 @@ namespace RentACar.WebApi.Controllers
             }
             return BadRequest(result.Message);
         }
+
     }
 }

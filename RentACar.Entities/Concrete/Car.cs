@@ -1,4 +1,6 @@
-﻿using RentACar.ConsoleUI.Attributes;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using RentACar.ConsoleUI.Attributes;
 using RentACar.Core.Entities;
 
 namespace RentACar.Entities.Concrete
@@ -14,9 +16,10 @@ namespace RentACar.Entities.Concrete
 
         //Relations
         [SkipProperty]
+        [JsonIgnore]
         public Brand  Brand { get; set; }
         [SkipProperty]
+        [JsonIgnore]
         public Color Color { get; set; }
-
     }
 }

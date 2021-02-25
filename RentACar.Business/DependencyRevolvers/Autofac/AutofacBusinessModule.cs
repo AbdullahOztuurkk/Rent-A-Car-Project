@@ -27,6 +27,8 @@ namespace RentACar.Business.DependencyRevolvers.Autofac
             builder.RegisterType<ColorManager>().As<IColorService>();
             builder.RegisterType<BrandManager>().As<IBrandService>();
             builder.RegisterType<RentalManager>().As<IRentalService>();
+            builder.RegisterType<FileManager>().As<IFileProcess>();
+            builder.RegisterType<CarImageManager>().As<ICarImageService>();
 
             //DataAccess injections
             builder.RegisterType<EfCarDal>().As<ICarDal>();
@@ -35,6 +37,7 @@ namespace RentACar.Business.DependencyRevolvers.Autofac
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>();
             builder.RegisterType<EfColorDal>().As<IColorDal>();
             builder.RegisterType<EfRentalDal>().As<IRentalDal>();
+            builder.RegisterType<EfCarImagesDal>().As<ICarImagesDal>();
 
             //General AOP Configuration
             var assembly = Assembly.GetExecutingAssembly();

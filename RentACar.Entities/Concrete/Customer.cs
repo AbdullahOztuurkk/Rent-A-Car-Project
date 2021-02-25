@@ -1,4 +1,5 @@
-﻿using RentACar.Core.Entities;
+﻿using System.Text.Json.Serialization;
+using RentACar.Core.Entities;
 
 namespace RentACar.Entities.Concrete
 {
@@ -8,7 +9,10 @@ namespace RentACar.Entities.Concrete
         public string Name { get; set; }
 
         //Relations
+        [JsonIgnore]
         public User User { get; set; }
+
+        [JsonIgnore]
         public int UserId { get; set; }
     }
 }
