@@ -37,6 +37,7 @@ $ dotnet restore
 
 - [Entity Framework](https://reactjs.org/)
 - [FluentValidation](https://www.apollographql.com/docs/react/get-started/)
+- [ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt)
 
 ## Developer
 #### Abdullah Öztürk
