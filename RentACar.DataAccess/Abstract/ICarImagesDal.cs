@@ -10,5 +10,6 @@ namespace RentACar.DataAccess.Abstract
 {
     public interface ICarImagesDal:IEntityRepository<CarImage>
     {
+        public bool IsExist(int id);
     }
 }

@@ -52,7 +52,8 @@ namespace RentACar.Business.Concrete
                 return null;
             CarImage currentCar = GetById(id).Data;
             carImagesDal.Delete(currentCar);
-            fileProcess.Delete(currentCar.ImagePath);
+            if(!currentCar.ImagePath.Equals("thumbnail.png")) // Delete it if current car's image is not thumbnail.
+                fileProcess.Delete(currentCar.ImagePath);
             return new SuccessResult(Messages.Add_Message(typeof(CarImage).Name));
         }
 
@@ -68,7 +69,7 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<List<CarImage>>(result);
         }
 
-        #region Business rules for carImage class
+        #region Business rules for car Image class
 
         public static IResult CheckImagesLimit(int id)
         {
@@ -80,7 +81,7 @@ namespace RentACar.Business.Concrete
         }
         public static IResult CheckTheCarImageExists(int FileId)
         {
-            return carImagesDal.Get(FileId) != null ? new Result(true) : new ErrorResult(Messages.Car_Must_Be_Exists);
+            return carImagesDal.Get(FileId) != null ? new Result(true) : new ErrorResult(Messages.Car_Image_Must_Be_Exists);
         }
         #endregion
     }

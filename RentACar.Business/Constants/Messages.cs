@@ -9,6 +9,8 @@
 
         public static string Car_Must_Be_Lower_Than_5_Photos = "You reached the maximum image limit.";
         public static string Car_Must_Be_Exists = "The car doesnt exist.";
+        public static string Car_Image_Must_Be_Exists = "The car image doesnt exist.";
+
 
 
         /*Validation messages*/

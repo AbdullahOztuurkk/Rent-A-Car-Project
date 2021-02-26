@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
 using RentACar.Business.Validation.FluentValidation;
@@ -14,19 +15,30 @@ namespace RentACar.Business.Concrete
 {
     public class CarManager:ICarService
     {
-        private ICarDal cardal;
+        private static ICarDal cardal;
+        private static ICarImagesDal carImagesDal;
+        private readonly IHostingEnvironment env;
 
-        public CarManager(ICarDal cardal)
+        public CarManager(ICarDal _cardal, ICarImagesDal _carImagesDal, IHostingEnvironment env)
         {
             //Constructor Injection
-            this.cardal = cardal;
+            cardal = _cardal;
+            carImagesDal = _carImagesDal;
+            this.env = env;
         }
 
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            //CheckValidator.Validate(new CarValidator(), car);
+            CheckValidator.Validate(new CarValidator(), car);
             cardal.Add(car);
+            if(!CheckCarImageExist(car.Id))
+                carImagesDal.Add(new CarImage
+                {
+                    CarId = car.Id,
+                    CreatedDate = DateTime.UtcNow,
+                    ImagePath = "thumbnail.png"
+                });
             return new SuccessResult(Messages.Add_Message(typeof(Car).Name));
         }
 
@@ -83,5 +95,13 @@ namespace RentACar.Business.Concrete
             var result = cardal.GetCarImageDetails(car => car.Id == id);
             return new SuccessDataResult<List<GetCarImagesDto>>(result);
         }
+
+        #region Business Rules for Car Manager
+        public static bool CheckCarImageExist(int id)
+        {
+            return carImagesDal.IsExist(id);
+        }
+
+        #endregion
     }
 }

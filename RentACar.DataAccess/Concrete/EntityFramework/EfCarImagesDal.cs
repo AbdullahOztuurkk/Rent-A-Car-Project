@@ -14,6 +14,12 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
 {
     public class EfCarImagesDal : EfEntityRepositoryBase<CarImage, RentACarContext>, ICarImagesDal
     {
-        
+        public bool IsExist(int id)
+        {
+            using (RentACarContext context=new RentACarContext())
+            {
+                return context.CarImages.Any(pre => pre.Id == id);
+            }
+        }
     }
 }
