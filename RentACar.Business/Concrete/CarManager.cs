@@ -53,7 +53,11 @@ namespace RentACar.Business.Concrete
             cardal.Update(car);
             return new SuccessResult(Messages.Update_Message(typeof(Car).Name));
         }
-
+        /// <summary>
+        /// All Car data will be removed when the car delete
+        /// </summary>
+        /// <param name="id">Car Id</param>
+        /// <returns></returns>
         public IResult Delete(int id)
         {
             var DeletedCar = GetById(id).Data;
@@ -61,9 +65,9 @@ namespace RentACar.Business.Concrete
             var DeletedCarImages = carImagesDal.GetAll(pre => pre.CarId == DeletedCar.Id);
             foreach (var deletedCarImage in DeletedCarImages)
             {
+                carImagesDal.Delete(deletedCarImage);
                 if (!deletedCarImage.ImagePath.Equals("thumbnail.png"))
                 {
-                    carImagesDal.Delete(deletedCarImage);
                     fileProcess.Delete(deletedCarImage.ImagePath);
                 }
             }
