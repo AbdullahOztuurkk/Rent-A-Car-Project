@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using RentACar.Core.DataAccess;
 using RentACar.DataAccess.Abstract;
 using RentACar.Entities.Concrete;
+using RentACar.Entities.Dtos;
 
 namespace RentACar.DataAccess.Concrete.InMemory
 {
@@ -56,6 +57,16 @@ namespace RentACar.DataAccess.Concrete.InMemory
         public void AddRange(List<Car> cars)
         {
             carList.AddRange(cars);
+        }
+
+        public List<GetCarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<GetCarImagesDto> GetCarImageDetails(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

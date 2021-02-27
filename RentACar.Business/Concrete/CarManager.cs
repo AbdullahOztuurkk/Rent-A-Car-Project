@@ -17,14 +17,14 @@ namespace RentACar.Business.Concrete
     {
         private static ICarDal cardal;
         private static ICarImagesDal carImagesDal;
-        private readonly IHostingEnvironment env;
+        private IFileProcess fileProcess;
 
-        public CarManager(ICarDal _cardal, ICarImagesDal _carImagesDal, IHostingEnvironment env)
+        public CarManager(ICarDal _cardal, ICarImagesDal _carImagesDal, IFileProcess fileProcess)
         {
             //Constructor Injection
             cardal = _cardal;
             carImagesDal = _carImagesDal;
-            this.env = env;
+            this.fileProcess = fileProcess;
         }
 
         [ValidationAspect(typeof(CarValidator))]
@@ -56,7 +56,17 @@ namespace RentACar.Business.Concrete
 
         public IResult Delete(int id)
         {
-            cardal.Delete(GetById(id).Data);
+            var DeletedCar = GetById(id).Data;
+            cardal.Delete(DeletedCar);
+            var DeletedCarImages = carImagesDal.GetAll(pre => pre.CarId == DeletedCar.Id);
+            foreach (var deletedCarImage in DeletedCarImages)
+            {
+                if (!deletedCarImage.ImagePath.Equals("thumbnail.png"))
+                {
+                    carImagesDal.Delete(deletedCarImage);
+                    fileProcess.Delete(deletedCarImage.ImagePath);
+                }
+            }
             return new SuccessResult(Messages.Delete_Message(typeof(Car).Name));
         }
 

@@ -47,9 +47,9 @@ namespace RentACar.Business.Concrete
         public IResult Delete(string path)
         {
             var roadpath = Path.Combine(FileDirectory, path+ ".png");
-            if (File.Exists(Path.Combine(FileDirectory, path+".png")))
+            if (File.Exists(roadpath))
             {
-                File.Delete(Path.Combine(FileDirectory,path+".png"));
+                File.Delete(roadpath);
             }
             return new SuccessResult();
         }

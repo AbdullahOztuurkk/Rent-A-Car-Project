@@ -13,7 +13,7 @@
 
 
 
-        /*Validation messages*/
+        /*Validation function messages*/
 
         public static string Multiple_Add_Message(string text) => $@"Multiple {text}s  Added";
         public static string Add_Message(string text) => $@" {text}  Added";
