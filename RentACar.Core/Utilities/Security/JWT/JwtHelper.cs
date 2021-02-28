@@ -6,6 +6,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RentACar.Core.Entities.Concrete;
+using RentACar.Core.Extensions;
 using RentACar.Core.Utilities.Security.Encryption;
 
 namespace RentACar.Core.Utilities.Security.JWT
@@ -21,7 +22,12 @@ namespace RentACar.Core.Utilities.Security.JWT
             _tokenOptions = this.configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
         }
-
+        /// <summary>
+        /// Create Token from given by user and it's claims
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="operationClaims"></param>
+        /// <returns></returns>
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
@@ -37,6 +43,11 @@ namespace RentACar.Core.Utilities.Security.JWT
                 Expiration = _accessTokenExpiration
             };
         }
+
+        /// <summary>
+        /// Generate JWT Token from User and token options
+        /// </summary>
+        /// <returns>JWT</returns>
         public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
             SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
         {
@@ -51,6 +62,12 @@ namespace RentACar.Core.Utilities.Security.JWT
             return jwt;
         }
 
+        /// <summary>
+        /// Set claims to user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="operationClaims"></param>
+        /// <returns></returns>
         private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
         {
             var claims = new List<Claim>();

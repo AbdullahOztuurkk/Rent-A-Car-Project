@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
 using RentACar.Core.Entities.Concrete;
@@ -46,6 +47,15 @@ namespace RentACar.Business.Concrete
         {
             var result = userDal.GetAll();
             return new SuccessDataResult<List<User>>(result);
+        }
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return userDal.GetClaims(user);
+        }
+
+        public User GetByMail(string email)
+        {
+            return userDal.GetAll(pre => pre.Email == email).FirstOrDefault();
         }
     }
 }

@@ -12,5 +12,7 @@ namespace RentACar.Business.Abstract
         public IResult Delete(int id);
         public IDataResult<User> GetById(int id);
         public IDataResult<List<User>> GetAll();
+        List<OperationClaim> GetClaims(User user);
+        User GetByMail(string email);
     }
 }

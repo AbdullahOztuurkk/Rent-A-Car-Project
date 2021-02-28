@@ -1,5 +1,6 @@
 ﻿namespace RentACar.Core.Entities.Concrete
 {
+
     public class User:IEntity
     {
         public int Id { get; set; }

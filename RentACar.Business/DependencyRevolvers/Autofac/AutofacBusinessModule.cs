@@ -2,10 +2,12 @@
 using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using RentACar.Business.Abstract;
 using RentACar.Business.Concrete;
 using RentACar.Core.Utilities.Interceptors;
+using RentACar.Core.Utilities.Security.JWT;
 using RentACar.DataAccess.Abstract;
 using RentACar.DataAccess.Concrete.EntityFramework;
 using Module = Autofac.Module;
@@ -29,6 +31,7 @@ namespace RentACar.Business.DependencyRevolvers.Autofac
             builder.RegisterType<RentalManager>().As<IRentalService>();
             builder.RegisterType<FileManager>().As<IFileProcess>();
             builder.RegisterType<CarImageManager>().As<ICarImageService>();
+            builder.RegisterType<AuthManager>().As<IAuthService>();
 
             //DataAccess injections
             builder.RegisterType<EfCarDal>().As<ICarDal>();
@@ -38,6 +41,9 @@ namespace RentACar.Business.DependencyRevolvers.Autofac
             builder.RegisterType<EfColorDal>().As<IColorDal>();
             builder.RegisterType<EfRentalDal>().As<IRentalDal>();
             builder.RegisterType<EfCarImagesDal>().As<ICarImagesDal>();
+
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
 
             //General AOP Configuration
             var assembly = Assembly.GetExecutingAssembly();
