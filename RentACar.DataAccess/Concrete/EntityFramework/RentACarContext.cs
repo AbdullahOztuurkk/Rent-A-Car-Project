@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RentACar.Core.Entities.Concrete;
 using RentACar.Entities.Concrete;
 
 namespace RentACar.DataAccess.Concrete.EntityFramework

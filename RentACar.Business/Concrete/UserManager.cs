@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Core.Entities.Concrete;
 using RentACar.Core.Utilities.Result;
 using RentACar.DataAccess.Abstract;
 using RentACar.Entities.Concrete;

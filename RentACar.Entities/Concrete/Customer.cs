@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using RentACar.Core.Entities;
+using RentACar.Core.Entities.Concrete;
 
 namespace RentACar.Entities.Concrete
 {

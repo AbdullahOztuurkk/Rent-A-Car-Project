@@ -7,10 +7,10 @@ using System.Text;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using ConsoleTableExt;
 using RentACar.Business.Concrete;
-using RentACar.ConsoleUI.Attributes;
 using RentACar.Core.Entities;
 using RentACar.DataAccess.Concrete.EntityFramework;
 using RentACar.DataAccess.Concrete.InMemory;
+using RentACar.Entities.Attributes;
 using RentACar.Entities.Concrete;
 
 namespace RentACar.ConsoleUI
@@ -66,7 +66,7 @@ namespace RentACar.ConsoleUI
         /// </summary>
         private static void UpdateCar()
         {
-            PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
+            //PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
             WriteToCenter("Enter the id to be updated :");
             int updatedIndex = Convert.ToInt32(Console.ReadLine());
             WriteToCenter("Car Name : ");
@@ -123,7 +123,7 @@ namespace RentACar.ConsoleUI
         /// </summary>
         private static void UpdateBrand()
         {
-            PrintListToTable(new BrandManager(new EfBrandDal()).GetAll().Data);
+            //PrintListToTable(new BrandManager(new EfBrandDal()).GetAll().Data);
             WriteToCenter("Enter the id to be updated :");
             int updatedIndex = Convert.ToInt32(Console.ReadLine());
             WriteToCenter("New Name : ");
@@ -180,7 +180,7 @@ namespace RentACar.ConsoleUI
             switch (menuId)
             {
                 case "1":
-                    carManager = new CarManager(new EfCarDal());  //Chosen Database Car Manager
+                    //carManager = new CarManager(new EfCarDal());  //Chosen Database Car Manager
                     WriteToCenter("Process Types");
                     WriteToCenter("1) Add     2) Delete     3) Update     4) List");
                     WriteToCenter("Which one do you choose :", true);   /*Process Types Menu*/
@@ -194,7 +194,7 @@ namespace RentACar.ConsoleUI
                             break;
                         case "2":
                             #region Delete the Car
-                            PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
+                            //PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
                             WriteToCenter("Enter the Id to be deleted :");
                             int deletedIndex = Convert.ToInt32(Console.ReadLine());
                             var process = carManager.Delete(deletedIndex);
@@ -208,7 +208,7 @@ namespace RentACar.ConsoleUI
                             break;
                         case "4":
                             #region Get Cars
-                            PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
+                            //PrintListToTable(new CarManager(new EfCarDal()).GetAll().Data);
                             #endregion
                             break;
                         default:

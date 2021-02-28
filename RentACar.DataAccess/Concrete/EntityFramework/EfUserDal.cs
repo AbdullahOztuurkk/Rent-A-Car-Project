@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.DataAccess;
+using RentACar.Core.Entities.Concrete;
 using RentACar.DataAccess.Abstract;
 using RentACar.Entities.Concrete;
 

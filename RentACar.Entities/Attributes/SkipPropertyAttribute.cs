@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace RentACar.ConsoleUI.Attributes
+namespace RentACar.Entities.Attributes
 {
     /// <summary>
     /// Attribute provides you can hide some property when print a table 

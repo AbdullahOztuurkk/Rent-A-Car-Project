@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using RentACar.ConsoleUI.Attributes;
 using RentACar.Core.Entities;
+using RentACar.Entities.Attributes;
 
 namespace RentACar.Entities.Concrete
 {
