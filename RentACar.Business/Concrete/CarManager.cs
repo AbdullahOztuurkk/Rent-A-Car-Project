@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using RentACar.Business.Abstract;
+using RentACar.Business.BusinessAspects;
 using RentACar.Business.Constants;
 using RentACar.Business.Validation.FluentValidation;
 using RentACar.Core.Aspects.Autofac;
@@ -80,6 +81,7 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<Car>(result);
         }
 
+        [SecuredOperation("cars.getall")]
         public IDataResult<List<Car>> GetAll()
         {
             var result = cardal.GetAll();
