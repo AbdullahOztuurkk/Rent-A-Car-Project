@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Core.Aspects.Autofac.Caching;
 using RentACar.Core.Utilities.Result;
 using RentACar.DataAccess.Abstract;
 using RentACar.Entities.Concrete;
@@ -39,6 +40,7 @@ namespace RentACar.Business.Concrete
 
         }
 
+        [CacheAspect]
         public IDataResult<Color> GetById(int id)
         {
             var result = colorDal.Get(id);
@@ -46,6 +48,7 @@ namespace RentACar.Business.Concrete
 
         }
 
+        [CacheAspect]
         public IDataResult<List<Color>> GetAll()
         {
             var result= colorDal.GetAll();

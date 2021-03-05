@@ -2,6 +2,7 @@
 using System.Linq;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Core.Aspects.Autofac.Caching;
 using RentACar.Core.Entities.Concrete;
 using RentACar.Core.Utilities.Result;
 using RentACar.DataAccess.Abstract;
@@ -36,18 +37,19 @@ namespace RentACar.Business.Concrete
             userDal.Delete(GetById(id).Data);
             return new SuccessResult( Messages.Delete_Message(typeof(User).Name));
         }
-
+        [CacheAspect]
         public IDataResult<User> GetById(int id)
         {
             var result = userDal.Get(id);
             return new SuccessDataResult<User>(result);
         }
-
+        [CacheAspect]
         public IDataResult<List<User>> GetAll()
         {
             var result = userDal.GetAll();
             return new SuccessDataResult<List<User>>(result);
         }
+        [CacheAspect]
         public List<OperationClaim> GetClaims(User user)
         {
             return userDal.GetClaims(user);

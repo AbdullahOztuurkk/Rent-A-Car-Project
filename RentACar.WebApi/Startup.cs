@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using RentACar.Core.DependencyRevolvers;
+using RentACar.Core.Extensions;
 using RentACar.Core.Utilities.IoC;
 using RentACar.Core.Utilities.Security.Encryption;
 using RentACar.DataAccess.Concrete.EntityFramework;
@@ -35,7 +38,7 @@ namespace RentACar.WebApi
              * You can 
              */
             //services.AddServicesDependencies();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton(typeof(Stopwatch));
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -53,8 +56,10 @@ namespace RentACar.WebApi
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
-            ServiceTool.Create(services);
-
+            services.AddDependencyRevolvers(new ICoreModule[]
+            {
+                new CoreModule()
+            });
 
         }
 

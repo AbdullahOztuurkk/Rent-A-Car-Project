@@ -43,7 +43,7 @@ namespace RentACar.Business.DependencyRevolvers.Autofac
             builder.RegisterType<EfCarImagesDal>().As<ICarImagesDal>();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
-            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+            //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
 
             //General AOP Configuration
             var assembly = Assembly.GetExecutingAssembly();

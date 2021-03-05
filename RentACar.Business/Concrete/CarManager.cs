@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
 using RentACar.Business.Abstract;
 using RentACar.Business.BusinessAspects;
 using RentACar.Business.Constants;
 using RentACar.Business.Validation.FluentValidation;
-using RentACar.Core.Aspects.Autofac;
+using RentACar.Core.Aspects.Autofac.Caching;
+using RentACar.Core.Aspects.Autofac.Performance;
+using RentACar.Core.Aspects.Autofac.Validation;
 using RentACar.Core.Utilities.FluentValidation;
 using RentACar.Core.Utilities.Result;
 using RentACar.DataAccess.Abstract;
@@ -75,6 +76,7 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.Delete_Message(typeof(Car).Name));
         }
 
+        [CacheAspect]
         public IDataResult<Car> GetById(int id)
         {
             var result = cardal.Get(id);
@@ -82,6 +84,8 @@ namespace RentACar.Business.Concrete
         }
 
         [SecuredOperation("cars.getall")]
+        //[PerformanceAspect(2)]
+        //[CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             var result = cardal.GetAll();
@@ -106,6 +110,7 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<List<Car>>(result);
         }
 
+        [CacheAspect]
         public IDataResult<List<GetCarImagesDto>> GetAllImagesById(int id)
         {
             var result = cardal.GetCarImageDetails(car => car.Id == id);

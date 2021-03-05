@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using RentACar.Business.Abstract;
 using RentACar.Business.Constants;
+using RentACar.Core.Aspects.Autofac.Caching;
 using RentACar.Core.Utilities.Business;
 using RentACar.Core.Utilities.Result;
 using RentACar.DataAccess.Abstract;
@@ -30,7 +31,7 @@ namespace RentACar.Business.Concrete
             IResult result = BusinessRules.Run(CheckImagesLimit(id),CheckTheCarExists(id));
             if (result!= null)
             {
-                return null;
+                return new ErrorResult();
             }
 
             string FileName = Guid.NewGuid().ToString();
@@ -57,12 +58,14 @@ namespace RentACar.Business.Concrete
             return new SuccessResult(Messages.Add_Message(typeof(CarImage).Name));
         }
 
+        [CacheAspect]
         public IDataResult<CarImage> GetById(int id)
         {
             var result = carImagesDal.Get(id);
             return new SuccessDataResult<CarImage>(result);
         }
 
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetAll()
         {
             var result = carImagesDal.GetAll();
