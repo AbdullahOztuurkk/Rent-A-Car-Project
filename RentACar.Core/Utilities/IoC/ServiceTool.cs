@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace RentACar.Core.Utilities.IoC
 {
     /// <summary>
-    /// This class provides it creates instance given by Timplementation
+    /// This class provides it creates instance given by Timplementation without dependency injection
     /// </summary>
     public static class ServiceTool
     {

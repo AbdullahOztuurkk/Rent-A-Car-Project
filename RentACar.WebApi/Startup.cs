@@ -42,6 +42,7 @@ namespace RentACar.WebApi
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
+            //Set authentication options with jwt bearer package
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

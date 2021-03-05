@@ -20,7 +20,7 @@ namespace RentACar.Core.Aspects.Autofac.Validation
             _validatorType = validatorType;
         }
         /// <summary>
-        /// Execute before method
+        /// Execute before method and validate parameters of method
         /// </summary>
         /// <param name="invocation"></param>
         protected override void OnBefore(IInvocation invocation)
