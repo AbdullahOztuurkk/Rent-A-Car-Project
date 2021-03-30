@@ -15,7 +15,7 @@ using RentACar.Entities.Dtos;
 
 namespace RentACar.Business.Concrete
 {
-    public class CarManager:ICarService
+    public class CarManager : ICarService
     {
         private static ICarDal cardal;
         private static ICarImagesDal carImagesDal;
@@ -34,7 +34,7 @@ namespace RentACar.Business.Concrete
         {
             CheckValidator.Validate(new CarValidator(), car);
             cardal.Add(car);
-            if(!CheckCarImageExist(car.Id))
+            if (!CheckCarImageExist(car.Id))
                 carImagesDal.Add(new CarImage
                 {
                     CarId = car.Id,
@@ -48,6 +48,32 @@ namespace RentACar.Business.Concrete
         {
             cardal.AddRange(cars);
             return new SuccessResult(Messages.Multiple_Add_Message(Messages.GetNameDict[typeof(Car)]));
+        }
+
+        public IDataResult<List<GetCarDetailDto>> GetCarDetailsByCarId(int carId)
+        {
+            return new SuccessDataResult<List<GetCarDetailDto>>(cardal.GetCarDetails(p => p.Id == carId));
+        }
+
+        public IDataResult<List<GetCarDetailDto>> GetCarDetailsByBrandId(int brandId)
+        {
+            return new SuccessDataResult<List<GetCarDetailDto>>(cardal.GetCarDetails(p => p.BrandId == brandId));
+        }
+
+        public IDataResult<List<GetCarDetailDto>> GetCarDetailsByColorId(int colorId)
+        {
+            return new SuccessDataResult<List<GetCarDetailDto>>(cardal.GetCarDetails(p => p.ColorId == colorId));
+        }
+
+
+        public IDataResult<List<Car>> GetByBrandId(int BrandId)
+        {
+            return new SuccessDataResult<List<Car>>(cardal.GetAll(p => p.BrandId == BrandId));
+        }
+
+        public IDataResult<List<Car>> GetByColorId(int ColorId)
+        {
+            return new SuccessDataResult<List<Car>>(cardal.GetAll(p => p.ColorId == ColorId));
         }
 
         public IResult Update(Car car)
@@ -106,7 +132,7 @@ namespace RentACar.Business.Concrete
 
         public IDataResult<List<Car>> GetByDescription(string description)
         {
-            var result= cardal.GetAll(car => car.Description.Contains(description));
+            var result = cardal.GetAll(car => car.Description.Contains(description));
             return new SuccessDataResult<List<Car>>(result);
         }
 

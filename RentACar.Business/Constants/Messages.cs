@@ -23,6 +23,8 @@ namespace RentACar.Business.Constants
         public static string User_Already_Exist = "The user already exist.";
         public static string User_Token_Created = "User Token successfully created";
 
+        public static string Customer_Must_Be_Exists = "The Customer doesnt exists.";
+
         /*Validation function messages*/
 
         public static string Multiple_Add_Message(string text) => $@"Multiple {text}s  Added";
@@ -42,5 +44,6 @@ namespace RentACar.Business.Constants
             { typeof(Color),"Color"},
             { typeof(Customer),"Customer"},
         };
+
     }
 }

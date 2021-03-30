@@ -9,5 +9,8 @@ namespace RentACar.Entities.Dtos
         public string ColorName { get; set; }
         public int DailyPrice { get; set; }
         public int ModelYear { get; set; }
+        public string Description { get; set; }
+        public bool IsRentable { get; set; }
+        public string ImagePath { get; set; }
     }
 }

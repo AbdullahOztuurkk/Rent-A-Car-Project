@@ -41,7 +41,10 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
                         ModelYear = car.ModelYear,
                         CarName = car.Description,
                         ColorName = clr.Name,
-                        BrandName = brn.Name
+                        BrandName = brn.Name,
+                        Description = car.Description,
+                        ImagePath = (from m in context.CarImages where m.CarId == car.Id select m.ImagePath).FirstOrDefault(),
+                        IsRentable = !context.Rentals.Any(r => r.CarId == car.Id) || !context.Rentals.Any(r => r.CarId == car.Id && (r.ReturnDate == null || (r.ReturnDate.HasValue && r.ReturnDate > DateTime.Now)))
                     };
                 return result.ToList();
             }

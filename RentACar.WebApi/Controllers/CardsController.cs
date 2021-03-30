@@ -42,6 +42,7 @@ namespace RentACar.WebApi.Controllers
             return BadRequest(result);
 
         }
+
         [HttpPut]
         public IActionResult Update(Card card)
         {
@@ -52,6 +53,7 @@ namespace RentACar.WebApi.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -62,6 +64,7 @@ namespace RentACar.WebApi.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpGet]
         [Route("customer/{id}")]
         public IActionResult GetByCustomerId(int id)
@@ -73,7 +76,6 @@ namespace RentACar.WebApi.Controllers
             }
             return BadRequest(result);
         }
-
 
         [HttpGet]
         [Route("color/{id}")]

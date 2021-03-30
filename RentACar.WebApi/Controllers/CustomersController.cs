@@ -75,5 +75,17 @@ namespace RentACar.WebApi.Controllers
             }
             return BadRequest(result.Message);
         }
+
+        [HttpGet]
+        [Route("car/{id}")]
+        public IActionResult GetCustomerByCarId(int id)
+        {
+            var result = customerService.GetCustomersByCarId(id);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

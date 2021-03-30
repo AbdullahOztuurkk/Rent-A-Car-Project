@@ -50,7 +50,7 @@ namespace RentACar.WebApi.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet]
-        [Route("images/{id}")]
+        [Route("image/{id}")]
         public IActionResult GetImages(int id)
         {
             var result = carService.GetAllImagesById(id);
@@ -94,5 +94,66 @@ namespace RentACar.WebApi.Controllers
             return BadRequest(result.Message);
         }
 
+        [HttpGet]
+        [Route("detail/color/{id}")]
+        public IActionResult GetCarDetailListByColorId(int colorId)
+        {
+            var result = carService.GetCarDetailsByColorId(colorId);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("detail/brand/{id}")]
+        public IActionResult GetCarDetailListByBrandId(int brandId)
+        {
+            var result = carService.GetCarDetailsByBrandId(brandId);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("detail/{id}")]
+        public IActionResult GetCarDetailByCarId(int carId)
+        {
+            var result = carService.GetCarDetailsByCarId(carId);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("brand/{id}")]
+        public IActionResult GetAllByBrandId(int id)
+        {
+            var result = carService.GetByBrandId(id);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+
+        }
+
+        [HttpGet]
+        [Route("color/{id}")]
+        public IActionResult GetAllByColorId(int id)
+        {
+            var result = carService.GetByColorId(id);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Data);
+            }
+            return BadRequest(result.Message);
+        }
     }
 }
