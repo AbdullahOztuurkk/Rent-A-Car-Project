@@ -43,7 +43,7 @@ namespace RentACar.Business.Concrete
             };
             carImagesDal.Add(carImg);
             var fileResult = fileProcess.Upload(FileName, files);
-            return new SuccessResult(Messages.Add_Message(typeof(CarImage).Name));
+            return new SuccessResult(Messages.Add_Message(Messages.GetNameDict[typeof(CarImage)]));
         }
 
         public IResult Delete(int id)
@@ -55,7 +55,7 @@ namespace RentACar.Business.Concrete
             carImagesDal.Delete(currentCar);
             if(!currentCar.ImagePath.Equals("thumbnail.png")) // Delete it if current car's image is not thumbnail.
                 fileProcess.Delete(currentCar.ImagePath);
-            return new SuccessResult(Messages.Add_Message(typeof(CarImage).Name));
+            return new SuccessResult(Messages.Add_Message(Messages.GetNameDict[typeof(CarImage)]));
         }
 
         [CacheAspect]

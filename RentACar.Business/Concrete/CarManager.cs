@@ -41,19 +41,19 @@ namespace RentACar.Business.Concrete
                     CreatedDate = DateTime.UtcNow,
                     ImagePath = "thumbnail.png"
                 });
-            return new SuccessResult(Messages.Add_Message(typeof(Car).Name));
+            return new SuccessResult(Messages.Add_Message(Messages.GetNameDict[typeof(Car)]));
         }
 
         public IResult AddRange(List<Car> cars)
         {
             cardal.AddRange(cars);
-            return new SuccessResult(Messages.Multiple_Add_Message(typeof(Car).Name));
+            return new SuccessResult(Messages.Multiple_Add_Message(Messages.GetNameDict[typeof(Car)]));
         }
 
         public IResult Update(Car car)
         {
             cardal.Update(car);
-            return new SuccessResult(Messages.Update_Message(typeof(Car).Name));
+            return new SuccessResult(Messages.Update_Message(Messages.GetNameDict[typeof(Car)]));
         }
         /// <summary>
         /// All Car data will be removed when the car delete
@@ -73,7 +73,7 @@ namespace RentACar.Business.Concrete
                     fileProcess.Delete(deletedCarImage.ImagePath);
                 }
             }
-            return new SuccessResult(Messages.Delete_Message(typeof(Car).Name));
+            return new SuccessResult(Messages.Delete_Message(Messages.GetNameDict[typeof(Car)]));
         }
 
         [CacheAspect]

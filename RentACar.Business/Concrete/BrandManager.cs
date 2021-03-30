@@ -24,19 +24,19 @@ namespace RentACar.Business.Concrete
         public IResult Add(Brand brand)
         {
             brandDal.Add(brand);
-            return new SuccessResult(Messages.Add_Message(typeof(Brand).Name));
+            return new SuccessResult(Messages.Add_Message(Messages.GetNameDict[typeof(Brand)]));
         }
 
         public IResult Update(Brand brand)
         {
             brandDal.Update(brand);
-            return new SuccessResult(Messages.Update_Message(typeof(Brand).Name));
+            return new SuccessResult(Messages.Update_Message(Messages.GetNameDict[typeof(Brand)]));
         }
 
         public IResult Delete(int id)
         {
             brandDal.Delete(GetById(id).Data);
-            return new SuccessResult( Messages.Delete_Message(typeof(Brand).Name));
+            return new SuccessResult( Messages.Delete_Message(Messages.GetNameDict[typeof(Brand)]));
 
         }
 
@@ -65,7 +65,7 @@ namespace RentACar.Business.Concrete
         public IResult AddRange(List<Brand> brands)
         {
             brandDal.AddRange(brands);
-            return new SuccessDataResult<List<Brand>>(Messages.Multiple_Add_Message(typeof(Brand).Name));
+            return new SuccessDataResult<List<Brand>>(Messages.Multiple_Add_Message(Messages.GetNameDict[typeof(Brand)]));
         }
     }
 }

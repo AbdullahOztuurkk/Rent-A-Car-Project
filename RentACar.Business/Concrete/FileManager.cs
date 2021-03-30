@@ -37,7 +37,7 @@ namespace RentACar.Business.Concrete
             {
                  await file.CopyToAsync(fileStream);
             }
-            return new SuccessResult(Messages.Add_Message(typeof(CarImage).Name));
+            return new SuccessResult(Messages.Add_Message(Messages.GetNameDict[typeof(CarImage)]));
         }
         /// <summary>
         /// Delete file from given path

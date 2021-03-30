@@ -28,19 +28,19 @@ namespace RentACar.Business.Concrete
                         return new ErrorResult(Messages.Car_Must_Be_Rental);
                 }
             }
-            return new SuccessResult(Messages.Add_Message(typeof(Rental).Name));
+            return new SuccessResult(Messages.Add_Message(Messages.GetNameDict[typeof(Rental)]));
         }
 
         public IResult Update(Rental rental)
         {
             rentalDal.Update(rental);
-            return new SuccessResult(Messages.Update_Message(typeof(Rental).Name));
+            return new SuccessResult(Messages.Update_Message(Messages.GetNameDict[typeof(Rental)]));
         }
 
         public IResult Delete(int id)
         {
             rentalDal.Add(GetById(id).Data);
-            return new SuccessResult(Messages.Delete_Message(typeof(Rental).Name));
+            return new SuccessResult(Messages.Delete_Message(Messages.GetNameDict[typeof(Rental)]));
         }
 
         [CacheAspect]

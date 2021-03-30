@@ -24,19 +24,19 @@ namespace RentACar.Business.Concrete
         public IResult Add(Color color)
         {
             colorDal.Add(color);
-            return new SuccessResult(Messages.Add_Message(typeof(Color).Name));
+            return new SuccessResult(Messages.Add_Message(Messages.GetNameDict[typeof(Color)]));
         }
 
         public IResult Update(Color color)
         {
             colorDal.Update(color);
-            return new SuccessResult( Messages.Update_Message(typeof(Color).Name));
+            return new SuccessResult( Messages.Update_Message(Messages.GetNameDict[typeof(Color)]));
         }
 
         public IResult Delete(int id)
         {
             colorDal.Delete(GetById(id).Data);
-            return new SuccessResult( Messages.Delete_Message(typeof(Color).Name));
+            return new SuccessResult( Messages.Delete_Message(Messages.GetNameDict[typeof(Color)]));
 
         }
 
@@ -65,7 +65,7 @@ namespace RentACar.Business.Concrete
         public IResult AddRange(List<Color> colors)
         {
             colorDal.AddRange(colors);
-            return new SuccessResult( Messages.Add_Message(typeof(Color).Name));
+            return new SuccessResult( Messages.Add_Message(Messages.GetNameDict[typeof(Color)]));
 
         }
     }

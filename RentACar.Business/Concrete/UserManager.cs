@@ -23,19 +23,19 @@ namespace RentACar.Business.Concrete
         public IResult Add(User user)
         {
             userDal.Add(user);
-            return new SuccessResult( Messages.Add_Message(typeof(User).Name));
+            return new SuccessResult( Messages.Add_Message(Messages.GetNameDict[typeof(User)]));
         }
 
         public IResult Update(User user)
         {
             userDal.Update(user);
-            return new SuccessResult( Messages.Update_Message(typeof(User).Name));
+            return new SuccessResult( Messages.Update_Message(Messages.GetNameDict[typeof(User)]));
         }
 
         public IResult Delete(int id)
         {
             userDal.Delete(GetById(id).Data);
-            return new SuccessResult( Messages.Delete_Message(typeof(User).Name));
+            return new SuccessResult( Messages.Delete_Message(Messages.GetNameDict[typeof(User)]));
         }
         [CacheAspect]
         public IDataResult<User> GetById(int id)

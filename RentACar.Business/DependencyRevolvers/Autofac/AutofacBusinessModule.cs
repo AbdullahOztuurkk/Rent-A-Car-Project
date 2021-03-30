@@ -32,6 +32,7 @@ namespace RentACar.Business.DependencyRevolvers.Autofac
             builder.RegisterType<FileManager>().As<IFileProcess>();
             builder.RegisterType<CarImageManager>().As<ICarImageService>();
             builder.RegisterType<AuthManager>().As<IAuthService>();
+            builder.RegisterType<CardManager>().As<ICardService>();
 
             //DataAccess injections
             builder.RegisterType<EfCarDal>().As<ICarDal>();
@@ -41,6 +42,7 @@ namespace RentACar.Business.DependencyRevolvers.Autofac
             builder.RegisterType<EfColorDal>().As<IColorDal>();
             builder.RegisterType<EfRentalDal>().As<IRentalDal>();
             builder.RegisterType<EfCarImagesDal>().As<ICarImagesDal>();
+            builder.RegisterType<EfCardDal>().As<ICardDal>();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
             //builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
