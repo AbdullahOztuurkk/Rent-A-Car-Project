@@ -12,6 +12,7 @@ namespace RentACar.Business.Validation.FluentValidation
         public CarValidator()
         {
             RuleFor(entity => entity.Description).MinimumLength(2).WithMessage(Messages.Car_Description_Minimum_Length);
+            RuleFor(entity => entity.Name).MinimumLength(2).WithMessage(Messages.Car_Name_Minimum_Length);
             RuleFor(entity => entity.DailyPrice).GreaterThan(0).WithMessage(Messages.Car_DailyPrice_Minimum_Limit);
         }
     }

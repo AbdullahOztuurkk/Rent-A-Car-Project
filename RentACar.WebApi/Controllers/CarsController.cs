@@ -49,6 +49,7 @@ namespace RentACar.WebApi.Controllers
 
             return BadRequest(result.Message);
         }
+
         [HttpGet]
         [Route("image/{id}")]
         public IActionResult GetImages(int id)
@@ -60,6 +61,7 @@ namespace RentACar.WebApi.Controllers
             }
             return BadRequest(result.Message);
         }
+
         [HttpPost]
         [Route("add")]
         public IActionResult Add([FromBody] Car car)
@@ -72,6 +74,7 @@ namespace RentACar.WebApi.Controllers
 
             return BadRequest(result.Message);
         }
+
         [HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -83,6 +86,7 @@ namespace RentACar.WebApi.Controllers
 
             return BadRequest(result.Message);
         }
+
         [HttpPut]
         public IActionResult Update([FromBody] Car car)
         {
@@ -92,6 +96,18 @@ namespace RentACar.WebApi.Controllers
                 return Ok(result);
             }
             return BadRequest(result.Message);
+        }
+
+        [HttpGet]
+        [Route("detail")]
+        public IActionResult GetCarDetailList()
+        {
+            var result = carService.GetCarDetails();
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         [HttpGet]
@@ -155,5 +171,6 @@ namespace RentACar.WebApi.Controllers
             }
             return BadRequest(result.Message);
         }
+
     }
 }

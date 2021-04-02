@@ -39,7 +39,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
                     {
                         DailyPrice = car.DailyPrice,
                         ModelYear = car.ModelYear,
-                        CarName = car.Description,
+                        CarName = car.Name,
                         ColorName = clr.Name,
                         BrandName = brn.Name,
                         Description = car.Description,
@@ -72,6 +72,7 @@ namespace RentACar.DataAccess.Concrete.EntityFramework
                         ModelYear = car.ModelYear,
                         Description = car.Description,
                         ColorName = clr.Name,
+                        CarName = car.Name,
                         BrandName = brn.Name,
                         ImagePath = crm.ImagePath,
                         CreatedDate = crm.CreatedDate,

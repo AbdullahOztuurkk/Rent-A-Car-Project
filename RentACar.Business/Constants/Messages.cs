@@ -9,6 +9,7 @@ namespace RentACar.Business.Constants
     {
         /*Validation messages*/
         public static string Car_Description_Minimum_Length = "Description must be at least 2 characters!";
+        public static string Car_Name_Minimum_Length= "Car Name must be at least 2 characters!";
         public static string Car_DailyPrice_Minimum_Limit = "Daily price must be greater than zero!";
         public static string Car_Must_Be_Rental = "Car must be rental before deliver the car";
 

@@ -65,6 +65,11 @@ namespace RentACar.Business.Concrete
             return new SuccessDataResult<List<GetCarDetailDto>>(cardal.GetCarDetails(p => p.ColorId == colorId));
         }
 
+        public IDataResult<List<GetCarDetailDto>> GetCarDetails()
+        {
+            return new SuccessDataResult<List<GetCarDetailDto>>(cardal.GetCarDetails());
+        }
+
 
         public IDataResult<List<Car>> GetByBrandId(int BrandId)
         {
@@ -133,6 +138,12 @@ namespace RentACar.Business.Concrete
         public IDataResult<List<Car>> GetByDescription(string description)
         {
             var result = cardal.GetAll(car => car.Description.Contains(description));
+            return new SuccessDataResult<List<Car>>(result);
+        }
+
+        public IDataResult<List<Car>> GetByName(string name)
+        {
+            var result = cardal.GetAll(car => car.Name.Contains(name));
             return new SuccessDataResult<List<Car>>(result);
         }
 
