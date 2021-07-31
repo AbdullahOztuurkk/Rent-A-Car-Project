@@ -1,7 +1,7 @@
 # Rent A Car System
 
 <p align="center">
-	<img width="100%" src="./src/Header.png"></img>
+	<img width="100%" src="./assets/Header.png"></img>
 </p>
 
 
@@ -28,7 +28,7 @@ $ dotnet restore
 
 &nbsp;
 <p align="center">
-	<img width="100%" src="./src/project.png"></img>
+	<img width="100%" src="./assets/project.png"></img>
 </p>
 &nbsp;
 
