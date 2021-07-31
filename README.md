@@ -1,50 +1,39 @@
-# Araç Kiralama Sistemi
+# Rent A Car System
 
 <p align="center">
 	<img width="100%" src="./src/Header.png"></img>
 </p>
 
 
-<b>Herkese merhaba!</b>  <p>Bu repo Yazılım Geliştirici Yetiştirme Kampı'nda yapılan çalışmaları kapsayan Araç Kiralama Projesidir. Genel olarak proje katmanlı mimariye uygun şekilde tasarlanıp ORM olarak entity framework kullanılmaktadır. Kullanıcı arayüzü olarak konsol uygulaması belirlenmiştir.</p>
+<b>Hello Everyone!</b>
+
+<p>It is a car rental project developed during the Software Development Camp. In general, the project was designed in accordance with the layered architecture and the entity framework is used as the ORM. Console application is determined as the user interface. </p>
 <br>
-<p><b>Gelin hep beraber katmanlarımızı tanıyalım</b></p>
-<p align="center">
-	<img width="100%" src="./src/About.png"></img>
-</p>
 
-## Kullanımı
+## How To Use
 
-Öncelikle terminale gelin ve aşağıdaki komutları girin :
+First, open the terminal and enter below commands:
 
 ```bash
-# Repository klonlayın
+# Clone the repository
 $ git clone https://github.com/AbdullahOztuurkk/Rent-A-Car-Project.git
 
-# Klonladığınız klasöre gidin
-$ cd Rent-A-Car-Project.git
+# Go to project folder
+$ cd Rent-A-Car-Project
 
-# Bağımlılıkları yükleyin
+# Install Dependencies
 $ dotnet restore
 ```
-## Ekran Görüntüleri
-<br>
+## Screenshots
+
+&nbsp;
 <p align="center">
 	<img width="100%" src="./src/project.png"></img>
 </p>
-<br>
+&nbsp;
 
-## Technologies Used 
+## Used Technologies
 
-- [Entity Framework](https://reactjs.org/)
-- [FluentValidation](https://www.apollographql.com/docs/react/get-started/)
+- [Entity Framework](https://entityframework.net/)
+- [FluentValidation](https://fluentvalidation.net/)
 - [ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt)
-
-## Developer
-#### Abdullah Öztürk
-🧧 [Medium](https://abdullahozturkk.medium.com/)
-
-💻 [Linkedin](https://www.linkedin.com/in/abdullah-ozturk/)
-
-💬 [Discord](AbdullahOztuurkk#5200)
-
-🎫 [Email](mailto:oabdullahozturk@yandex.com.tr)
